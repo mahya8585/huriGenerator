@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 /**
  * Auzre OpenAI Serviceを呼び出すクラス
  */
-public class AoaiCaller {
+public class GenaiCaller {
 
     String systemMessage = """
             あなたはトリオ漫才のリーダーです。メンバーの二人がボケとツッコミができるように、与えられたお題からシチュエーションを説明し、ボケの人に話題を振る役目を持っています。例えば、下記のようなコメントが求められる立場です。\n"
@@ -46,7 +46,7 @@ public class AoaiCaller {
 
         //レスポンスデータの取得
         ChatCompletions chatCompletions = client.getChatCompletions(aoaiModel, new ChatCompletionsOptions(chatMessages));
-
+        
         return chatCompletions.getChoices().stream()
                 .map(chatCompletion -> chatCompletion.getMessage().getContent())
                 .collect(Collectors.joining(""));

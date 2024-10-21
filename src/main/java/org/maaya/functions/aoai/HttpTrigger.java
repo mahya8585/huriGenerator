@@ -7,14 +7,14 @@ import com.microsoft.azure.functions.*;
 /**
  * Azure Functions(HTTP Trigger).
  */
-public class HttpTriggerJava {
+public class HttpTrigger {
     /**
      * 漫才トリオの振り役が発しそうな文章を生成するシステム。
      * @param request リクエスト. この中のパラメータに漫才テーマが入るthemeパラメータを含む。
      */
     @FunctionName("huri-generator")
     public HttpResponseMessage run(
-            @HttpTrigger(name = "req", methods = {HttpMethod.GET, HttpMethod.POST}, authLevel = AuthorizationLevel.FUNCTION) HttpRequestMessage<Optional<String>> request,
+            @com.microsoft.azure.functions.annotation.HttpTrigger(name = "req", methods = {HttpMethod.GET, HttpMethod.POST}, authLevel = AuthorizationLevel.FUNCTION) HttpRequestMessage<Optional<String>> request,
             final ExecutionContext context) {
 
         context.getLogger().info("生成開始！");
@@ -26,10 +26,7 @@ public class HttpTriggerJava {
 
         //Azure OpenAI Service を使ってテーマに沿った振り文章を作成する
         AoaiCaller aoaiCaller = new AoaiCaller();
-        String answerText = aoaiCaller.createSentence(theme);
-
-        // Json型のレスポンスを作成し、返却する。
-        Response response = new Response(answerText);
+        Response response = new Response(aoaiCaller.createSentence(theme));
 
 
         if (response.text() == null) {
