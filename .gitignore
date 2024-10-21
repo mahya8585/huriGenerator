@@ -1,6 +1,7 @@
 # Build output
 target/
 *.class
+build/
 
 # Log file
 *.log
@@ -38,4 +39,5 @@ hs_err_pid*
 local.settings.json
 bin/
 obj/
+src/main/.azure/
 

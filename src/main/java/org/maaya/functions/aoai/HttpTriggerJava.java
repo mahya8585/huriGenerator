@@ -12,7 +12,7 @@ public class HttpTriggerJava {
      * 漫才トリオの振り役が発しそうな文章を生成するシステム。
      * @param request リクエスト. この中のパラメータに漫才テーマが入るthemeパラメータを含む。
      */
-    @FunctionName("HttpTriggerJava")
+    @FunctionName("huri-generator")
     public HttpResponseMessage run(
             @HttpTrigger(name = "req", methods = {HttpMethod.GET, HttpMethod.POST}, authLevel = AuthorizationLevel.FUNCTION) HttpRequestMessage<Optional<String>> request,
             final ExecutionContext context) {
