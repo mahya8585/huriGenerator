@@ -24,17 +24,18 @@ public class HttpTriggerJava {
         String query = request.getQueryParameters().get("theme");
         String theme = request.getBody().orElse(query);
 
-        // Azure OpenAI Service を使ってテーマに沿った振り文章を作成する
-
+        //Azure OpenAI Service を使ってテーマに沿った振り文章を作成する
+        AoaiCaller aoaiCaller = new AoaiCaller();
+        String answerText = aoaiCaller.createSentence(theme);
 
         // Json型のレスポンスを作成し、返却する。
-        Response response = new Response("Hello, " + name);
+        Response response = new Response(answerText);
 
 
         if (response.text() == null) {
             return request.createResponseBuilder(HttpStatus.BAD_REQUEST).body("リクエスト変数確認してくれ!").build();
         } else {
-            return request.createResponseBuilder(HttpStatus.OK).body("Hello, " + name).build();
+            return request.createResponseBuilder(HttpStatus.OK).body(response).build();
         }
     }
 }

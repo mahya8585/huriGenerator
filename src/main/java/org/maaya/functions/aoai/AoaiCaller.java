@@ -9,6 +9,7 @@ import com.azure.core.util.Configuration;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Auzre OpenAI Serviceを呼び出すクラス
@@ -35,15 +36,16 @@ public class AoaiCaller {
                 .endpoint(aoaiEndpoint)
                 .buildClient();
 
-        //チャットリクエストの設定
+        //チャットリクエスト
         List<ChatRequestMessage> chatMessages = new ArrayList<>();
         chatMessages.add(new ChatRequestSystemMessage(SYSTEM_MESSAGE));
         chatMessages.add(new ChatRequestUserMessage(theme));
 
+        //レスポンスデータの取得
         ChatCompletions chatCompletions = client.getChatCompletions(aoaiModel, new ChatCompletionsOptions(chatMessages));
-
-        // TODO レスポンスデータの整形
-
-        return "Hello, " + theme;
+        return chatCompletions.getChoices().stream()
+                .map(chatCompletion -> chatCompletion.getMessage().getContent())
+                .collect(Collectors.joining(""));
     }
+
 }
