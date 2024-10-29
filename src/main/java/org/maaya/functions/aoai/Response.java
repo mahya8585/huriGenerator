@@ -1,7 +1,7 @@
 package org.maaya.functions.aoai;
 
 /**
- * レスポンスクラス
+ * レスポンスデータ
  * @param text
  */
 public record Response(String text) {
